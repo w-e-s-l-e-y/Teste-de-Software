@@ -28,4 +28,7 @@ public class CarrinhoItems {
     public double getTotalPrice(){
         return preco * quantidade;
     }
+
+    public class LayoutParams {
+    }
 }
