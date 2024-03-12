@@ -30,7 +30,7 @@ public class ShopCarrinho {
 
     public void  removerItem(CarrinhoItems item){
         items.remove(item);
-        JOptionPane.showInputDialog(item);
+        ;
     }
 
 

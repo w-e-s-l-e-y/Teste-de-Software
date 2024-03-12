@@ -107,6 +107,7 @@ public class Screen extends JFrame {
             shopCarrinho.removerItem(itemRemover);
             items.remove(selectedIndex);
             listModel.remove(selectedIndex);
+            JOptionPane.showMessageDialog(null, "Item removido!", "Sucesso!!", JOptionPane.WARNING_MESSAGE);
             atualizarTotal();
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um item para remover.");
