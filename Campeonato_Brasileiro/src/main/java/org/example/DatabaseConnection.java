@@ -1,17 +1,13 @@
 package org.example;
-
-javaCopy code
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeRepository {
+public class DatabaseConnection {
     public void save(Time time) {
         String sql = "INSERT INTO Time (nome, pontuacao, saldo_gols) VALUES (?, ?, ?)";
 
+        DatabaseMetaData DatabaseConnection = null;
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, time.getNome());
@@ -27,6 +23,7 @@ public class TimeRepository {
         String sql = "SELECT * FROM Time";
         List<Time> times = new ArrayList<>();
 
+        DatabaseMetaData DatabaseConnection = null;
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {

@@ -1,7 +1,5 @@
 package org.example;
 
-
-
 public class Jogo {
    private int id;
    private Time timeCasa;
@@ -9,9 +7,16 @@ public class Jogo {
    private int resultadoCasa;
    private int getResultadoVisitante;
 
+   public Jogo(Time palmeiras, Time flamengo) {
+   }
 
 
+   public void setResultado(String s) {
+   }
 
+   public String getResultado() {
+       return null;
+   }
 }
 
 
