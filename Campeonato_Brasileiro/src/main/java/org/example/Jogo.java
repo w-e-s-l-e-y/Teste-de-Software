@@ -5,18 +5,23 @@ public class Jogo {
    private Time timeCasa;
    private Time timeVisitante;
    private int resultadoCasa;
-   private int getResultadoVisitante;
+   private int resultadoVisitante;
 
-   public Jogo(Time palmeiras, Time flamengo) {
+   public Jogo(Time timeCasa, Time timeVisitante) {
+      this.timeCasa = timeCasa;
+      this.timeVisitante = timeVisitante;
    }
 
-
-   public void setResultado(String s) {
+   public void setResultado(String resultado) {
+      String[] partes = resultado.split("x");
+      this.resultadoCasa = Integer.parseInt(partes[0]);
+      this.resultadoVisitante = Integer.parseInt(partes[1]);
    }
 
    public String getResultado() {
-       return null;
+      return resultadoCasa + "x" + resultadoVisitante;
    }
 }
+
 
 

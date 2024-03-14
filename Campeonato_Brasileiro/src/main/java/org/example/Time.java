@@ -1,43 +1,50 @@
 package org.example;
 
 public class Time {
-
-    private int id;
     private String nome;
     private int pontuacao;
     private int saldoGols;
 
-    public Time(String palmeiras, int i, int i1) {
+    public Time(String nome, int pontuacao, int saldoGols) {
+        this.nome = nome;
+        this.pontuacao = pontuacao;
+        this.saldoGols = saldoGols;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getPontuacao() {
+        return pontuacao;
+    }
+
+    public int getSaldoGols() {
+        return saldoGols;
+    }
+
 
     public Time() {
 
     }
 
-    public String getNome() {
-        return null;
-    }
-
-    public int getPontuacao() {
-        return 0;
-    }
-
-    public int getSaldoGols() {
-        return 0;
-    }
-
-    public void setId(int id) {
-    }
-
     public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
     }
 
     public void setSaldoGols(int saldoGols) {
+        this.saldoGols = saldoGols;
     }
 
-    public void atualizarPontuacao(int i) {
+    public void atualizarPontuacao(int pontos) {
+        this.pontuacao += pontos;
+    }
+
+
+    public void setId(int id) {
     }
 }
