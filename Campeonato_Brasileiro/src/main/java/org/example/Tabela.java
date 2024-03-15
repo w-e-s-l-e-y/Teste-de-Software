@@ -1,7 +1,7 @@
 package org.example;
-
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Tabela {
     private List<Time> times;
@@ -45,24 +45,14 @@ public class Tabela {
     }
 
     public List<Time> getTimesNaZonaDeRebaixamento() {
-        List<Time> timesNaZonaDeRebaixamento = new ArrayList<>();
-        int menorPontuacao = Integer.MAX_VALUE;
+        // Ordena os times pelo critério de desempate (pontuação, saldo de gols)
+        List<Time> timesOrdenados = times.stream()
+                .sorted(Comparator.comparingInt(Time::getPontuacao)
+                        .thenComparingInt(Time::getSaldoGols))
+                .collect(Collectors.toList());
 
-        // Encontrar a menor pontuação entre os times
-        for (Time time : times) {
-            if (time.getPontuacao() < menorPontuacao) {
-                menorPontuacao = time.getPontuacao();
-            }
-        }
-
-        // Adicionar os times com essa pontuação mínima à lista de times na zona de rebaixamento
-        for (Time time : times) {
-            if (time.getPontuacao() == menorPontuacao) {
-                timesNaZonaDeRebaixamento.add(time);
-            }
-        }
-
-        return timesNaZonaDeRebaixamento;
+        // Retorna os três primeiros times da lista ordenada
+        return timesOrdenados.subList(0, Math.min(3, timesOrdenados.size()));
     }
     private int calcularPontuacaoMaxima() {
         int maxPontuacao = Integer.MIN_VALUE;
