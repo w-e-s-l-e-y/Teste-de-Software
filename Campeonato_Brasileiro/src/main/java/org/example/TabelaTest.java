@@ -1,76 +1,49 @@
 package org.example;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
-import java.util.List;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TabelaTest {
 
     @Test
-    public void testCalcularLiderDaTabela() {
-        // Criar uma tabela com times e pontuações conhecidas
-        List<Time> times = List.of(
-                new Time("Time A", 15, 10),
-                new Time("Time B", 12, 8),
-                new Time("Time C", 10, 5)
-        );
-        Tabela tabela = new Tabela(times);
+    public void testAdicionarTime() throws SQLException {
+        Connection connection = ConnectionFactory.getConnection();
+        assertNotNull(connection);
 
-        // Verificar se o líder é calculado corretamente
-        Time lider = tabela.getLider();
-        assertEquals("Time A", lider.getNome());
+        Tabela tabela = new Tabela();
+        Time time = new Time(1, "Flamengo");
+        tabela.adicionarTime(time, connection); // Passando também a conexão
+
+        assertEquals(1, tabela.getListaTimes().size());
+        assertEquals("Flamengo", tabela.getListaTimes().get(0).getNome());
     }
 
     @Test
-    public void testCalcularLanternaDaTabela() {
-        // Criar uma tabela com times e pontuações conhecidas
-        List<Time> times = List.of(
-                new Time("Time A", 15, 10),
-                new Time("Time B", 12, 8),
-                new Time("Time C", 10, 5)
-        );
-        Tabela tabela = new Tabela(times);
+    public void testAdicionarJogo() throws SQLException {
+        Connection connection = ConnectionFactory.getConnection();
+        assertNotNull(connection);
 
-        // Verificar se o lanterna é calculado corretamente
-        Time lanterna = tabela.getLanterna();
-        assertEquals("Time C", lanterna.getNome());
+        Tabela tabela = new Tabela();
+
+        Date dataJogo = new Date(0);
+        Jogo jogo = new Jogo(1, "Flamengo", "Corinthians", 2, 1, dataJogo);
+        tabela.adicionarJogo(jogo, connection); // Passando também a conexão
+
+        // Verifica se o jogo foi adicionado corretamente
+        assertEquals(1, tabela.getListaJogos().size());
+        assertEquals("Flamengo", tabela.getListaJogos().get(0).getTimeCasa());
+        assertEquals("Corinthians", tabela.getListaJogos().get(0).getTimeVisitante());
+        assertEquals(2, tabela.getListaJogos().get(0).getGolsCasa());
+        assertEquals(1, tabela.getListaJogos().get(0).getGolsVisitante());
+
+        // Fechar a conexão após o teste
+        connection.close();
     }
 
-    @Test
-    public void testIdentificarTimesNaZonaDeRebaixamento() {
-        // Criar uma tabela com times e pontuações conhecidas
-        List<Time> times = List.of(
-                new Time("Time A", 15, 10),
-                new Time("Time B", 12, 8),
-                new Time("Time C", 10, 5),
-                new Time("Time D", 8, 3),
-                new Time("Time E", 5, -5)
-        );
-        Tabela tabela = new Tabela(times);
-
-        // Verificar se os times na zona de rebaixamento são identificados corretamente
-        List<Time> rebaixados = tabela.getTimesNaZonaDeRebaixamento();
-        assertEquals(3, rebaixados.size());
-        assertTrue(rebaixados.contains(new Time("Time C", 10, 5)));
-        assertTrue(rebaixados.contains(new Time("Time D", 8, 3)));
-        assertTrue(rebaixados.contains(new Time("Time E", 5, -5)));
-    }
-
-    @Test
-    public void testObterDadosDoTime() {
-        // Criar uma tabela com times e pontuações conhecidas
-        List<Time> times = List.of(
-                new Time("Time A", 15, 10),
-                new Time("Time B", 12, 8),
-                new Time("Time C", 10, 5)
-        );
-        Tabela tabela = new Tabela(times);
-
-        // Verificar se é possível obter informações detalhadas de um time específico
-        Time time = tabela.getTime("Time B");
-        assertNotNull(time);
-        assertEquals("Time B", time.getNome());
-        assertEquals(12, time.getPontuacao());
-        assertEquals(8, time.getSaldoGols());
-    }
 }
-

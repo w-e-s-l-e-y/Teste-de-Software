@@ -1,102 +1,47 @@
 package org.example;
-import java.util.Comparator;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Tabela {
-    private List<Time> times;
-    private List<Jogo> jogos;
+    private List<Time> listaTimes;
+    private List<Jogo> listaJogos;
 
-    public Tabela(List<Time> times, List<Jogo> jogos) {
-        this.times = times;
-        this.jogos = jogos;
+    public Tabela() {
+        this.listaTimes = new ArrayList<>();
+        this.listaJogos = new ArrayList<>();
     }
 
-    public Tabela(List<Time> times) {
-        this.times = times;
-    }
-
-    public Time calcularLider() {
-        Time lider = null;
-        int maiorPontuacao = Integer.MIN_VALUE;
-
-        for (Time time : times) {
-            if (time.getPontuacao() > maiorPontuacao) {
-                lider = time;
-                maiorPontuacao = time.getPontuacao();
-            }
+    public void adicionarTime(Time time, Connection connection) throws SQLException {
+        listaTimes.add(time);
+        String sql = "INSERT INTO times (nome) VALUES (?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, time.getNome());
+            statement.executeUpdate();
         }
-
-        return lider;
     }
 
-    public Time calcularLanterna() {
-        Time lanterna = null;
-        int menorPontuacao = Integer.MAX_VALUE;
-
-        for (Time time : times) {
-            if (time.getPontuacao() < menorPontuacao) {
-                lanterna = time;
-                menorPontuacao = time.getPontuacao();
-            }
+    public void adicionarJogo(Jogo jogo, Connection connection) throws SQLException {
+        listaJogos.add(jogo);
+        String sql = "INSERT INTO jogos (timeCasa, timeVisitante, golsCasa, golsVisitante, data) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, jogo.getTimeCasa());
+            statement.setString(2, jogo.getTimeVisitante());
+            statement.setInt(3, jogo.getGolsCasa());
+            statement.setInt(4, jogo.getGolsVisitante());
+            statement.setDate(5, new java.sql.Date(jogo.getData().getTime()));
+            statement.executeUpdate();
         }
-
-        return lanterna;
     }
 
-    public List<Time> getTimesNaZonaDeRebaixamento() {
-        // Ordena os times pelo critério de desempate (pontuação, saldo de gols)
-        List<Time> timesOrdenados = times.stream()
-                .sorted(Comparator.comparingInt(Time::getPontuacao)
-                        .thenComparingInt(Time::getSaldoGols))
-                .collect(Collectors.toList());
-
-        // Retorna os três primeiros times da lista ordenada
-        return timesOrdenados.subList(0, Math.min(3, timesOrdenados.size()));
-    }
-    private int calcularPontuacaoMaxima() {
-        int maxPontuacao = Integer.MIN_VALUE;
-        for (Time time : times) {
-            if (time.getPontuacao() > maxPontuacao) {
-                maxPontuacao = time.getPontuacao();
-            }
-        }
-        return maxPontuacao;
-    }
-    public Time getTime(String nome) {
-        for (Time time : times) {
-            if (time.getNome().equals(nome)) {
-                return time;
-            }
-        }
-        return null;
+    public List<Time> getListaTimes() {
+        return listaTimes;
     }
 
-    public Time getLider() {
-        Time lider = null;
-        int maiorPontuacao = Integer.MIN_VALUE;
-
-        for (Time time : times) {
-            if (time.getPontuacao() > maiorPontuacao) {
-                lider = time;
-                maiorPontuacao = time.getPontuacao();
-            }
-        }
-
-        return lider;
-    }
-
-    public Time getLanterna() {
-        Time lanterna = null;
-        int menorPontuacao = Integer.MAX_VALUE;
-
-        for (Time time : times) {
-            if (time.getPontuacao() < menorPontuacao) {
-                lanterna = time;
-                menorPontuacao = time.getPontuacao();
-            }
-        }
-
-        return lanterna;
+    public List<Jogo> getListaJogos() {
+        return listaJogos;
     }
 }
