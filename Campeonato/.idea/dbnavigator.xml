@@ -25,10 +25,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="e8e73c67-2741-4057-aebf-b283d77758d0" object-ref="consoles/Campeonato.db" />
-      <object connection-id="e8e73c67-2741-4057-aebf-b283d77758d0" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="e8e73c67-2741-4057-aebf-b283d77758d0" />
