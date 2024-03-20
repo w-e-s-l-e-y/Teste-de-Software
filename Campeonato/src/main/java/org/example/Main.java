@@ -21,9 +21,9 @@ public class Main {
                 statement.executeUpdate("CREATE TABLE IF NOT EXISTS jogos (time1 TEXT, time2 TEXT, golsTime1 INTEGER, golsTime2 INTEGER)");
 
 
-                //statement.executeUpdate("INSERT INTO jogos (time1, time2, golsTime1, golsTime2) VALUES ('Atletico Mineiro', 'Flamengo', 0, 1)");
+                //statement.executeUpdate("INSERT INTO jogos (time1, time2, golsTime1, golsTime2) VALUES ('Atletico Mineiro', 'Flamengo', 0, 0)");
                 //statement.executeUpdate("INSERT INTO jogos (time1, time2, golsTime1, golsTime2) VALUES ('Vasco', 'Flamengo', 0, 2)");
-               // statement.executeUpdate("INSERT INTO jogos (time1, time2, golsTime1, golsTime2) VALUES ('São Paulo', 'Cruzeiro', 1, 2)");
+               // statement.executeUpdate("INSERT INTO jogos (time1, time2, golsTime1, golsTime2) VALUES ('São Paulo', 'Cruzeiro', 4, 2)");
                // statement.executeUpdate("INSERT INTO jogos (time1, time2, golsTime1, golsTime2) VALUES ('Santos', 'Botafogo', 1, 0)");
                // statement.executeUpdate("INSERT INTO jogos (time1, time2, golsTime1, golsTime2) VALUES ('Fluminense', 'Gremio', 0, 2)");
 

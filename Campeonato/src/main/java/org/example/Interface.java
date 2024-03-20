@@ -1,4 +1,5 @@
 package org.example;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -56,8 +57,6 @@ public class Interface extends JFrame {
         timesModel.addColumn("Times");
         timesTable.setModel(timesModel);
 
-
-
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:campeonato.db");
              Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT * FROM times");
@@ -111,6 +110,11 @@ public class Interface extends JFrame {
         Time lanterna = tabela.getLanterna();
         List<Time> rebaixados = tabela.getTimesRebaixados();
 
+        // Adicionar logs para verificar valores antes de atualizar os rótulos
+        System.out.println("Líder: " + (lider != null ? lider.getNome() : "Nenhum"));
+        System.out.println("Lanterna: " + (lanterna != null ? lanterna.getNome() : "Nenhum"));
+        System.out.println("Rebaixados: " + rebaixados);
+
         liderLabel.setText("Líder: " + (lider != null ? lider.getNome() : "Nenhum"));
         lanternaLabel.setText("Lanterna: " + (lanterna != null ? lanterna.getNome() : "Nenhum"));
 
@@ -127,7 +131,7 @@ public class Interface extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-           Interface campeonatoInterface = new Interface();
+            Interface campeonatoInterface = new Interface();
             campeonatoInterface.setVisible(true);
             campeonatoInterface.carregarDados();
         });

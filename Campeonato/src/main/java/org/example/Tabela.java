@@ -19,8 +19,14 @@ class Tabela {
 
     public Time getLanterna() {
         if (times.isEmpty()) return null;
-        return times.stream().min(Comparator.comparingInt(Time::getPontos)).orElse(null);
+        return times.stream()
+                .sorted(Comparator.comparingInt(Time::getPontos)
+                        .thenComparingInt(Time::getSaldoDeGols))
+                .findFirst()
+                .orElse(null);
     }
+
+
 
     public List<Time> getTimesRebaixados() {
         if (times.isEmpty()) return new ArrayList<>();
