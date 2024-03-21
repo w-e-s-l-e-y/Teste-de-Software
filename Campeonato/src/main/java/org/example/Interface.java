@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Interface extends JFrame {
@@ -51,7 +52,7 @@ public class Interface extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    private void carregarDados() {
+    public void carregarDados(Time lider, Time lanterna, List<Time> rebaixados) {
         // Carregar dados da tabela "times"
         DefaultTableModel timesModel = new DefaultTableModel();
         timesModel.addColumn("Times");
@@ -106,17 +107,22 @@ public class Interface extends JFrame {
         }
 
         Tabela tabela = new Tabela(times);
-        Time lider = tabela.getLider();
-        Time lanterna = tabela.getLanterna();
-        List<Time> rebaixados = tabela.getTimesRebaixados();
+//
+
+        // calcular e mostrar o lanterna conforme a pontuação dos jogos
+        if (lanterna != null) {
+            int pontuacaoLanterna = lanterna.calcularPontos();
+            lanternaLabel.setText("Lanterna: " + lanterna.getNome() + " (" + pontuacaoLanterna + " pontos)");
+        }
+
 
         // Adicionar logs para verificar valores antes de atualizar os rótulos
         System.out.println("Líder: " + (lider != null ? lider.getNome() : "Nenhum"));
         System.out.println("Lanterna: " + (lanterna != null ? lanterna.getNome() : "Nenhum"));
         System.out.println("Rebaixados: " + rebaixados);
 
-        liderLabel.setText("Líder: " + (lider != null ? lider.getNome() : "Nenhum"));
-        lanternaLabel.setText("Lanterna: " + (lanterna != null ? lanterna.getNome() : "Nenhum"));
+        liderLabel.setText("Líder: " + ((lider != null) ? lider.getNome() : "Nenhum"));
+        lanternaLabel.setText("Lanterna: " + ((lanterna != null) ? lanterna.getNome() : "Nenhum"));
 
 
         StringBuilder rebaixadosText = new StringBuilder("Times Rebaixados: ");
@@ -129,11 +135,11 @@ public class Interface extends JFrame {
         rebaixadosLabel.setText(rebaixadosText.toString());
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Interface campeonatoInterface = new Interface();
-            campeonatoInterface.setVisible(true);
-            campeonatoInterface.carregarDados();
-        });
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            Interface campeonatoInterface = new Interface();
+//            campeonatoInterface.setVisible(true);
+//            campeonatoInterface.carregarDados();
+//        });
+//    }
 }

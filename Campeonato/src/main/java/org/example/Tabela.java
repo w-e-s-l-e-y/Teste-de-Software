@@ -3,6 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 class Tabela {
@@ -14,16 +15,31 @@ class Tabela {
 
     public Time getLider() {
         if (times.isEmpty()) return null;
-        return times.stream().max(Comparator.comparingInt(Time::getPontos)).orElse(null);
+
+        Time[] lista_times = new Time[times.size()];
+
+        PriorityQueue<Time> timesQueue = new PriorityQueue<Time>(new Comparador());
+
+        timesQueue.addAll(times);
+        for (int i = 0; i < times.size(); i++) {
+            lista_times[i] = timesQueue.poll();
+        }
+
+        return lista_times[0];
     }
 
     public Time getLanterna() {
         if (times.isEmpty()) return null;
-        return times.stream()
-                .sorted(Comparator.comparingInt(Time::getPontos)
-                        .thenComparingInt(Time::getSaldoDeGols))
-                .findFirst()
-                .orElse(null);
+        Time[] lista_times = new Time[times.size()];
+
+        PriorityQueue<Time> timesQueue = new PriorityQueue<Time>(new Comparador());
+
+        timesQueue.addAll(times);
+        for (int i = 0; i < times.size(); i++) {
+            lista_times[i] = timesQueue.poll();
+        }
+
+        return lista_times[times.size() - 1];
     }
 
 

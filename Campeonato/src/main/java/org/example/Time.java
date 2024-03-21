@@ -42,4 +42,8 @@ class Time {
     public int getSaldoDeGols() {
         return golsMarcados - golsSofridos;
     }
+
+    public int calcularPontos() {
+        return golsMarcados * 3 + golsSofridos;
+    }
 }

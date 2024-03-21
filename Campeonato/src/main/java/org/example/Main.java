@@ -1,5 +1,6 @@
 package org.example;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ public class Main {
     private static final String URL = "jdbc:sqlite:campeonato.db";
 
     public static void main(String[] args) {
+        Interface campeonatoInterface = new Interface();
+        campeonatoInterface.setVisible(true);
         List<Time> times = new ArrayList<>();
 
         try {
@@ -87,8 +90,11 @@ public class Main {
            } else {
              System.out.println("Flamengo não encontrado na tabela.");
           }
+
+           campeonatoInterface.carregarDados(lider, lanterna, timesRebaixados);
         } catch (SQLException e) {
             System.out.println("Erro ao conectar ou manipular o banco de dados: " + e.getMessage());
         }
+
     }
 }
